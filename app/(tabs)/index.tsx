@@ -1,3 +1,4 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
   FlatList,
@@ -8,16 +9,33 @@ import {
   View,
 } from "react-native";
 
+
 export default function HomeScreen() {
-  const [items, setItems] = useState([]);
+
+  type Item = {
+    id : string;
+    name : string;
+    qty : number;
+  }
+
+  const [items, setItems] = useState<Item[]>([]);
   const [showInputs, setShowInputs] = useState(false);
   const [name, setName] = useState("");
   const [qty, setQty] = useState("");
 
   const handleAdd = () => {
-    if (!name.trim() || !qty.trim()) return;
+    const trimmed = name.trim();
+    const q = parseInt(qty, 10);  // ✅ conversion string → number
 
-    const newItem = { id: Date.now().toString(), name, qty };
+    if (!trimmed) return;           // pas de nom
+    if (Number.isNaN(q) || q <= 0) return; // quantité invalide
+
+    const newItem: Item = { 
+      id: Date.now().toString(), 
+      name: trimmed, 
+      qty: q                     // ✅ maintenant c’est bien un number
+    };
+
     setItems((prev) => [...prev, newItem]);
 
     // reset
@@ -25,6 +43,7 @@ export default function HomeScreen() {
     setQty("");
     setShowInputs(false);
   };
+
 
   return (
     <View style={styles.container}>
@@ -38,9 +57,12 @@ export default function HomeScreen() {
             data={items}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <Text style={styles.item}>
-                {item.name} · x{item.qty}
-              </Text>
+              <View style={styles.row}>
+                <MaterialIcons name="check-box-outline-blank" size = {24} color="black" />
+                <Text style={styles.item}>
+                  {item.name} · x{item.qty}
+                </Text>
+              </View>
             )}
           />
         )}
@@ -137,4 +159,18 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
   },
+
+  row: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 8,               
+  backgroundColor: '#fff',
+  padding: 12,
+  borderRadius: 8,
+  marginBottom: 8,
+},
+itemText: {
+  fontSize: 16,
+  color: '#222',
+},
 });
