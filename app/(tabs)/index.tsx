@@ -5,7 +5,9 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Liste de courses</Text>
 
-      {/* Footer collé en bas, centré */}
+      <View style = {styles.panel}>
+      </View>
+
       <View style={styles.footer}>
         <TouchableOpacity style={styles.button}>
           <Text>Ajouter un produit</Text>
@@ -24,6 +26,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#6C5543',
     padding: 20,
     alignItems: 'center',
+  },
+  panel: {
+    backgroundColor : '#FFFFFF',
+    flex: 0.8,
+    width : '80%',
+    margin : 10,
+    borderRadius : 10,
   },
   title: {
     color: '#fdfdff',
