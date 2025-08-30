@@ -16,6 +16,7 @@ export default function HomeScreen() {
     id : string;
     name : string;
     qty : number;
+    checked : boolean;
   }
 
   const [items, setItems] = useState<Item[]>([]);
@@ -25,15 +26,16 @@ export default function HomeScreen() {
 
   const handleAdd = () => {
     const trimmed = name.trim();
-    const q = parseInt(qty, 10);  // ✅ conversion string → number
+    const q = parseInt(qty, 10); 
 
-    if (!trimmed) return;           // pas de nom
-    if (Number.isNaN(q) || q <= 0) return; // quantité invalide
+    if (!trimmed) return;           
+    if (Number.isNaN(q) || q <= 0) return; 
 
     const newItem: Item = { 
       id: Date.now().toString(), 
       name: trimmed, 
-      qty: q                     // ✅ maintenant c’est bien un number
+      qty: q,   
+      checked : false,                  
     };
 
     setItems((prev) => [...prev, newItem]);
@@ -42,6 +44,14 @@ export default function HomeScreen() {
     setName("");
     setQty("");
     setShowInputs(false);
+  };
+
+  const toggleChecked = (id : string) => {
+    setItems(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, checked: !item.checked } : item
+      )
+    );
   };
 
 
@@ -58,7 +68,14 @@ export default function HomeScreen() {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View style={styles.row}>
-                <MaterialIcons name="check-box-outline-blank" size = {24} color="black" />
+
+                <TouchableOpacity onPress={() => toggleChecked(item.id)}>
+                  <MaterialIcons
+                  name= {item.checked ? "check-box" : "check-box-outline-blank"}
+                  size = {24} 
+                  color= {item.checked ? "green" : "#333"} />
+                </TouchableOpacity>
+
                 <Text style={styles.item}>
                   {item.name} · x{item.qty}
                 </Text>
