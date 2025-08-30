@@ -2,42 +2,46 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
   return (
-    <View style={styles.Container}>
-      <Text style={styles.text}>Liste de courses</Text>
-      <TouchableOpacity style={styles.ajoutProduit}>
-        <Text>Ajouter un produit</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.produitFrequent}>
-        <Text>Produit fréquent</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <Text style={styles.title}>Liste de courses</Text>
+
+      {/* Footer collé en bas, centré */}
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.button}>
+          <Text>Ajouter un produit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text>Produit fréquent</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  Container: {
-    alignItems: 'center',
-    justifyContent : 'center',
-    gap: 8,
+  container: {
+    flex: 1,
     backgroundColor: '#6C5543',
-    flex : 1,
+    padding: 20,
+    alignItems: 'center',
   },
-  text: {
-    color: '#fdfdff', 
+  title: {
+    color: '#fdfdff',
     fontSize: 20,
+    marginTop: 24,
   },
-  ajoutProduit: {
-    position: 'absolute',
-    bottom: 30,
-    backgroundColor : "#FFFFEC",
-    padding : 15,
-    borderRadius : 10,
+  footer: {
+    marginTop: 'auto',     // pousse le bloc en bas
+    width: '100%',
+    alignItems: 'center',
+    gap: 12,               // ⚠️ voir note ci-dessous
+    paddingBottom: 30,     // espace par rapport au bas
   },
-  produitFrequent: {
-    position: 'absolute',
-    bottom: 100,
-    backgroundColor : "#FFFFEC",
-    padding : 15,
-    borderRadius : 10,
+  button: {
+    backgroundColor: '#FFFFEC',
+    padding: 15,
+    borderRadius: 10,
+    width: '100%',
+    alignItems: 'center',
   },
 });
