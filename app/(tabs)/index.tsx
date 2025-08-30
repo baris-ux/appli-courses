@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 24,
     marginBottom: 12,
+    fontWeight : "bold",
   },
   panel: {
     flex: 0.8,
