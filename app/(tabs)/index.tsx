@@ -54,6 +54,11 @@ export default function HomeScreen() {
     );
   };
 
+  const anyChecked = items.some(it => it.checked);
+
+  const finalize = () => {
+    setItems(prev => prev.filter(i => !i.checked));
+  };
 
   return (
     <View style={styles.container}>
@@ -107,6 +112,16 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.footer}>
+        {anyChecked && (
+          <TouchableOpacity
+            style={[styles.boutton, styles.validateButton]}
+            onPress={finalize}
+          >
+            <Text>Valider</Text>
+          </TouchableOpacity>
+        )}
+
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => setShowInputs(true)}
@@ -189,5 +204,18 @@ const styles = StyleSheet.create({
 itemText: {
   fontSize: 16,
   color: '#222',
+},
+
+validateButton: {
+  backgroundColor: '#C7EFCF', // vert léger pour différencier
+  marginBottom: 8,
+},
+
+boutton: {
+  backgroundColor: '#FFFFEC',
+  padding: 15,
+  borderRadius: 10,
+  width: '100%',
+  alignItems: 'center',
 },
 });
